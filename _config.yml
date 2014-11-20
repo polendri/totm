@@ -1,5 +1,5 @@
 name: Technology of the Month
-url: http://pshendry.github.io/totm
+baseurl: /totm
 description: Every month, a new overview of a language, engine, framework, or other software development technology
 
 permalink: /:title/

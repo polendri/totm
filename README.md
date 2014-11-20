@@ -39,7 +39,18 @@ several contributions and want to save yourself some trouble.
 
 ## Content Authoring Resources
 
-This site uses [Jekyll](http://jekyllrb.com/), which will create HTML pages out
-of Markdown content.
+### Markdown basics
 
- - [Markdown basics](https://help.github.com/articles/markdown-basics/)
+Github has a nice tutorial on [Markdown basics](https://help.github.com/articles/markdown-basics/).
+
+### Viewing changes locally using Jekyll
+
+This site uses [Jekyll](http://jekyllrb.com/), which will create HTML pages out
+of Markdown content. If you like, you can install Jekyll locally so that you
+preview changes.
+
+ - [Installing Jekyll](https://help.github.com/articles/using-jekyll-with-pages/#installing-jekyll)
+ - [Running Jekyll](https://help.github.com/articles/using-jekyll-with-pages/#running-jekyll)
+   - Note: Run the following command instead of the one provided there: `bundle exec jekyll serve -b ""`;
+     this overrides the baseurl of "/totm".
+
