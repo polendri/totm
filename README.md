@@ -45,12 +45,13 @@ Github has a nice tutorial on [Markdown basics](https://help.github.com/articles
 
 This site uses [Jekyll](http://jekyllrb.com/), which will create HTML pages out
 of Markdown content. If you like, you can install Jekyll locally so that you
-preview changes.
+preview changes; you can also preview drafts in this way.
 
  - [Installing Jekyll](https://help.github.com/articles/using-jekyll-with-pages/#installing-jekyll)
  - [Running Jekyll](https://help.github.com/articles/using-jekyll-with-pages/#running-jekyll)
    - Note: Run the following command instead of the one provided there: `bundle exec jekyll serve -b ""`;
      this overrides the baseurl of "/totm".
+   - Pass the `--drafts` flag to preview drafts in addition to posts.
 
 The instructions are not super detailed, so here's step-by-step instructions
 for Ubuntu:
