@@ -54,3 +54,14 @@ preview changes.
    - Note: Run the following command instead of the one provided there: `bundle exec jekyll serve -b ""`;
      this overrides the baseurl of "/totm".
 
+The instructions are not super detailed, so here's step-by-step instructions
+for Ubuntu:
+
+ - Open a terminal and navigate to the repository root;
+ - Run `sudo apt-get install ruby-dev nodejs` to install dependencies;
+ - Run `sudo gem install bundler` to install the Bundler package manager;
+ - Run `bundle install` to install Jekyll locally;
+ - Run `bundle exec jekyll serve -b ""` to start a local Jekyll server;
+ - Visit `http://localhost:4000/` to view the site based on your local state,
+   exactly as it would appear if pushed to the GitHub Pages site.
+
