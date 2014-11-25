@@ -1,11 +1,18 @@
 ---
 layout: post
-title:  "Sample Topic: Week 1"
+title:  "Sample Topic: Introduction"
 date:   2014-11-20 18:13:00
 authors: "Old Gregg"
 ---
 
-Heading 1
----------
+## Section title
 
-Content 1.
+Section description.
+
+### Subsection title
+
+Subsection content.
+
+### Subsection title 2
+
+More subsection content.
