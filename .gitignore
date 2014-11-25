@@ -1,1 +1,5 @@
+# Project files
 _site
+
+# OS / app-generated files
+*.swp
