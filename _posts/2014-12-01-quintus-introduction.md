@@ -47,8 +47,9 @@ JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introdu
 
 ## Getting started
 
-Let's start with the shell of a Quintus game, the details of which we'll expand
-on shortly:
+Let's start with the shell of a Quintus game: a JavaScript file that
+initializes Quintus, and an HTML file that contains the `<canvas>` element
+that Quintus will use.
 
 `game_template.html`:
 
@@ -58,10 +59,11 @@ on shortly:
   <head>
     <!-- (use quintus-all.min.js for production) -->
     <script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.js'></script>
+    <!-- (remember to change this if you rename game_template.js) -->
     <script src='game_template.js'></script>
   </head>
   <body>
-    <canvas id='quintusContainer' width='800' height='600'></canvas>
+    <canvas id='quintusContainer' width='800' height='600' style='margin: auto;'></canvas>
   </body>
 </html>
 {% endhighlight %}
@@ -70,24 +72,38 @@ on shortly:
 
 {% highlight javascript %}
 window.addEventListener('load',function() {
-  var Q = Quintus({                          // Create a new engine instance
-    development: true                // Forces assets to not be cached, turn
+  var Q = Quintus({                      // Create a new engine instance
+    development: true                    // Forces assets to not be cached, turn
                                          // this off for production
   })
   .include("Sprites, Scenes, Input, 2D, Touch, UI") // Load any needed modules
-  .setup("quintusContainer")// {        // Use an existing canvas element
-    //width: 800,                      // Set the width of the game window
-    //height: 600                      // Set the height of the game window
-    //maximize: true                 // Alternatively you could make the game take
-                                     // up as much space as possible
-  //})
-  .controls()                        // Add in default controls (keyboard, buttons)
-  .touch();                          // Add in touch support (for the UI)
+  .setup("quintusContainer")             // Use an existing canvas element
+  .controls()                            // Add in default controls (keyboard, buttons)
+  .touch();                              // Add in touch support (for the UI)
 
   /*
-  Your game's code goes here, what follows is just some placeholder stuff
+  Your game's code goes here
   */
+});
+{% endhighlight %}
 
+The quickest way to get started is to just save both files locally and open the
+HTML file in your browser (I would advise using Firefox or Chrome since they
+have the debugging facilities that will be very handy).
+
+If you want to host the game online, [GitHub Pages](https://pages.github.com/)
+makes it super easy (that's what this site is hosted on). Setting that up is
+beyond the scope of this post, but it's quite easy to do. If you go that route,
+you'll want to stick your game files in your GitHub repo and then visit it in
+your browser (e.g. `http://yourusername.github.io/yourgame/game_template.html`).
+
+If you open up that page, you'll find that it's blank, because there's no code
+in there that draws something to the screen. If you replace the "Your game's
+code goes here" comment with the JavaScript below (taken from one of the
+numerous examples in Quintus' documentation), you'll see a black ball move on
+the screen:
+
+{% highlight javascript %}
   Q.MovingSprite.extend("Ball",{
     draw: function(ctx) {
       ctx.fillStyle = "black";
@@ -110,9 +126,8 @@ window.addEventListener('load',function() {
       ball.update(dt);
       ball.render(Q.ctx);
   });
-
-  /*
-  End of the placeholder code
-  */
-});
 {% endhighlight %}
+
+Now that you've verified that you've got everything set up correctly, we can
+make the game do a little more than move a ball in an arc. I hope you didn't
+get too attached to the ball arc code, because it's time to delete it.
