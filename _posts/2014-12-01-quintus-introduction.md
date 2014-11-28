@@ -21,7 +21,7 @@ offerings?
 
 I had a hell of a time trying to settle on a engine to pick for this month; it's
 surprisingly hard to find something that meets those criteria! I'm sure Quintus
-isn't the only one that would work (have a look at http://html5gameengine.com/
+isn't the only one that would work (have a look at [http://html5gameengine.com/](http://html5gameengine.com/)
 if you're looking to compare some of the other offerings), but I've been quite
 enjoying it.
 
@@ -51,7 +51,7 @@ Let's start with the shell of a Quintus game: a JavaScript file that
 initializes Quintus, and an HTML file that contains the `<canvas>` element
 that Quintus will use.
 
-`game_template.html`:
+`game.html`:
 
 {% highlight html %}
 <!DOCTYPE HTML>
@@ -59,8 +59,8 @@ that Quintus will use.
   <head>
     <!-- (use quintus-all.min.js for production) -->
     <script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.js'></script>
-    <!-- (remember to change this if you rename game_template.js) -->
-    <script src='game_template.js'></script>
+    <!-- (remember to change this if you rename game.js) -->
+    <script src='game.js'></script>
   </head>
   <body>
     <canvas id='quintusContainer' width='800' height='600' style='margin: auto;'></canvas>
@@ -68,7 +68,7 @@ that Quintus will use.
 </html>
 {% endhighlight %}
 
-`game_template.js`:
+`game.js`:
 
 {% highlight javascript %}
 window.addEventListener('load',function() {
@@ -95,7 +95,7 @@ If you want to host the game online, [GitHub Pages](https://pages.github.com/)
 makes it super easy (that's what this site is hosted on). Setting that up is
 beyond the scope of this post, but it's quite easy to do. If you go that route,
 you'll want to stick your game files in your GitHub repo and then visit it in
-your browser (e.g. `http://yourusername.github.io/yourgame/game_template.html`).
+your browser (e.g. `http://yourusername.github.io/yourgame/game.html`).
 
 If you open up that page, you'll find that it's blank, because there's no code
 in there that draws something to the screen. If you replace the "Your game's
