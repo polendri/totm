@@ -98,36 +98,109 @@ you'll want to stick your game files in your GitHub repo and then visit it in
 your browser (e.g. `http://yourusername.github.io/yourgame/game.html`).
 
 If you open up that page, you'll find that it's blank, because there's no code
-in there that draws something to the screen. If you replace the "Your game's
-code goes here" comment with the JavaScript below (taken from one of the
-numerous examples in Quintus' documentation), you'll see a black ball move on
-the screen:
+in there that draws something to the screen. Let's drop in some sample code
+(modified from an example in the Quintus documentation) to see something
+in action. You'll need to do two things:
+
+ 1. Copy this sprite, [enemy.png]({{ site.baseurl }}/assets/content/quintus/enemy.png),
+    to a new `images` directory in the root of your project;
+ 2. Replace the "Your game's code goes here" comment with the JavaScript below:
 
 {% highlight javascript %}
-  Q.MovingSprite.extend("Ball",{
-    draw: function(ctx) {
-      ctx.fillStyle = "black";
-      ctx.beginPath();
-      ctx.arc(-this.p.cx,
-              -this.p.cy,
-              this.p.w/2,0,Math.PI*2); 
-      ctx.fill();
+  // Create a simple scene that adds two shapes on the page
+  Q.scene("start",function(stage) {
 
-    }
+    // A basic sprite shape a asset as the image
+    var sprite1 = new Q.Sprite({ x: 400, y: 100, asset: 'enemy.png', 
+                                 angle: 0, collisionMask: 1, scale: 1});
+    sprite1.p.points = [
+      [ -150, -120 ],
+      [  150, -120 ],
+      [  150,   60 ],
+      [   90,  120 ],
+      [  -90,  120 ],
+      [ -150,   60 ]
+      ];
+    stage.insert(sprite1);
+    // Add the 2D component for collision detection and gravity.
+    sprite1.add('2d')
+
+    sprite1.on('step',function() {
+    });
+
+    // A red platform for the other sprite to land on
+    var sprite2 = new Q.Sprite({ x: 400, y: 600, w: 300, h: 200 });
+    sprite2.draw= function(ctx) {
+      ctx.fillStyle = '#FF0000';
+      ctx.fillRect(-this.p.cx,-this.p.cy,this.p.w,this.p.h);
+    };
+    stage.insert(sprite2);
+
+    // Bind the basic inputs to different behaviors of sprite1
+    Q.input.on('up',stage,function(e) { 
+      sprite1.p.scale -= 0.1;
+    });
+
+    Q.input.on('down',stage,function(e) { 
+      sprite1.p.scale += 0.1;
+    });
+
+    Q.input.on('left',stage,function(e) {
+      sprite1.p.angle -= 5;
+    });
+
+    Q.input.on('right',stage,function(e) {
+      sprite1.p.angle += 5;
+    });
+
+    Q.input.on('fire',stage,function(e) {
+      sprite1.p.vy = -600;
+    });
+
+    Q.input.on('action',stage,function(e) {
+      sprite1.p.x = 400;
+      sprite1.p.y = 100;
+    });
   });
 
-  var ball = window.ball = new Q.Ball({ w:  20,  h:   20, 
-                                        x:  30,  y:  300, 
-                                       vx:  30, vy: -100, 
-                                       ax:   0, ay:   30 });
+  Q.load('enemy.png',function() {
 
-  Q.gameLoop(function(dt) {
-      Q.clear();
-      ball.update(dt);
-      ball.render(Q.ctx);
+    // Start the show
+    Q.stageScene("start");
+
+    // Turn visual debugging on to see the 
+    // bounding boxes and collision shapes
+    Q.debug = true;
+
+    // Turn on default keyboard controls
+    Q.input.keyboardControls();
   });
 {% endhighlight %}
 
-Now that you've verified that you've got everything set up correctly, we can
-make the game do a little more than move a ball in an arc. I hope you didn't
-get too attached to the ball arc code, because it's time to delete it.
+Refresh `game.html` in your browser and you should see something like this:
+
+![The Quintus sprite demo in action]({{ site.baseurl }}/assets/content/quintus/sprite_demo.png)
+
+If you hadn't guessed it based on the code, the demo is
+interactive: the up and down arrow keys scale the sprite smaller/bigger, the
+left and right arrow keys rotate it, and the space key makes it hop up into the
+air. There's a lot more about that code that still needs explaining, but I'm
+going to leave that until next week.
+
+## Next week
+
+ - Some Quintus "theory": scenes, sprites, classes, events, components, and
+   more;
+ - Making a basic platformer game.
+
+## Further reading
+
+If you're eager to learn more about how you can write games with Quintus, here
+are a bunch of pages worth visiting:
+
+ - [The official guide](http://www.html5quintus.com/guide/intro.md), which is a
+   good reference for the core functionality of the engine (how to build
+   scenes, handle input, draw sprites, etc);
+ - [The main documentation page](http://www.html5quintus.com/documentation),
+   which has a big list of examples and another big list of links to various
+   tutorials.
