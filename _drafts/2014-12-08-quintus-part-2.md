@@ -5,6 +5,8 @@ date:   2014-12-08 00:00:00
 authors: "Paul Hendry"
 ---
 
+<script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.js'></script>
+
 Part 1: [Quintus, a JavaScript Game Engine: Introduction]({{ site.baseurl }}/quintus-introduction)
 
 In this post, we'll build a simple platformer and learn about scenes, sprites,
@@ -71,3 +73,135 @@ tiles appropriately, you can draw your map without ever thinking about
 collisions.
 
 In my example, I've opted for the latter solution.
+
+## A Note About Serving Your Game
+
+In the first post, I suggested you could run your game locally by opening up
+the HTML file in your browser. It turns out that doesn't work so well in
+general, because web browsers' cross-site scripting protection tends to block
+the loading of additional content.
+
+If you're running your game locally, you'll need some kind of webserver to
+host your game. If you've got Python installed, this can be as simple as
+running `python -m SimpleHTTPServer` in the root directory of your project
+(pretty neat actually!). Otherwise, you might consider [Mongoose](http://cesanta.com/mongoose.shtml)
+or [Apache](http://httpd.apache.org/).
+
+## Putting Mario on the Map
+
+Let's load that TMX file into Quintus and add a player-controlled character.
+We'll want to start off pretty much the exact same way as before by creating an
+instance of the Quintus object; this time though, we're using the TMX module
+so we've got to indicate that.
+
+{% highlight javascript %}
+window.addEventListener('load',function() {
+  var Q = Quintus({                  // Create a new engine instance
+    development: true,               // Forces assets to not be cached, turn
+                                     // this off for production
+  })
+  .include("Sprites, Scenes, Input, Anim, 2D, Touch, UI, TMX") // Load all kiiinds of modules
+  .setup("quintusContainer")
+  .controls()                        // Add in default controls (keyboard, buttons)
+  .touch();                          // Add in touch support (for the UI)
+{% endhighlight %}
+
+Next, we'll create a player sprite.
+
+{% highlight javascript %}
+  Q.Sprite.extend("Player",{
+    init: function(p) {
+      this._super(p, { asset: "mario.png", jumpSpeed: -400, speed: 300 });
+      this.add('2d, platformerControls');
+    },
+    step: function(dt) {
+      if(Q.inputs['left'] && this.p.direction == 'right') {
+        this.p.flip = 'x';
+      } 
+      else if(Q.inputs['right']  && this.p.direction == 'left') {
+        this.p.flip = false;                    
+      }
+    }                    
+  });
+{% endhighlight %}
+
+Here we're loading our `mario.png` asset
+(which has to be in an `images` directory at the root of your project unless
+you change the `imagePath` property to something else when starting Quintus).
+We're also opting in to a whole bunch of magic: Quintus has built-in support
+for collision detection (in the `2d` module) and for full platformer controls.
+The controls probably won't behave in exactly the way you like, but you'll be able to
+change that later.
+
+We're also getting fancy and flipping the sprite around to face the direction
+it's moving in. This is done in the `step` function, which gets called each
+frame.
+
+Next, we create a scene for the game. Scenes are a good way to split a game
+up into distinct sections; for we just have the one though.
+
+{% highlight javascript %}
+  Q.scene("level1", function(stage) {          
+    Q.stageTMX("map.tmx", stage);
+    var player = stage.insert(new Q.Player({ x: 13*16 + 8, y: 24*16 + 8}));
+    stage.add("viewport").follow(player);
+  });
+{% endhighlight %}
+
+We're creating a scene called `level`, filling it with the information from the
+TMX file (which is expected to be in a `data` directory similarly to how images
+are handled), we're adding a new player sprite at specific coordinates, and
+we're adding a viewport that follows a player. That's an awful lot of stuff
+happening in just a few lines of code!
+
+Lastly, we need to actually load the assets we've been referencing. We provide
+a callback for what to do when the loading is done, which is simply to stage
+the scene we defined previously.
+
+{% highlight javascript %}
+  Q.loadTMX("map.tmx, mario.png", function() {
+    Q.stageScene("level1");
+  });
+{% endhighlight %}
+
+The end result looks like this:
+
+<canvas id='quintusContainer1' width='400' height='300' style='margin: auto;'></canvas>
+<script>
+window.addEventListener('load',function() {
+  var Q = Quintus({                  // Create a new engine instance
+    imagePath: "{{ site.baseurl }}/assets/content/quintus/part2/game1/images/",
+    dataPath:  "{{ site.baseurl }}/assets/content/quintus/part2/game1/data/",
+  })
+  .include("Sprites, Scenes, Input, Anim, 2D, Touch, UI, TMX") // Load all kiiinds of modules
+  .setup("quintusContainer1")
+  .controls()                        // Add in default controls (keyboard, buttons)
+  .touch();                          // Add in touch support (for the UI)
+
+  Q.Sprite.extend("Player",{
+    init: function(p) {
+      this._super(p, { asset: "mario.png", jumpSpeed: -400, speed: 300 });
+      this.add('2d, platformerControls');
+    },
+    step: function(dt) {
+      if(Q.inputs['left'] && this.p.direction == 'right') {
+        this.p.flip = 'x';
+      } 
+      else if(Q.inputs['right']  && this.p.direction == 'left') {
+        this.p.flip = false;                    
+      }
+    }                    
+  });
+
+  Q.scene("level1", function(stage) {          
+    Q.stageTMX("map.tmx", stage);
+    var player = stage.insert(new Q.Player({ x: 13*16 + 8, y: 24*16 + 8}));
+    stage.add("viewport").follow(player);
+  });
+
+  Q.loadTMX("map.tmx, mario.png", function() {
+    Q.stageScene("level1");
+  });
+});
+</script>
+
