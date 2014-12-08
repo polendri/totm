@@ -5,7 +5,7 @@ date:   2014-12-08 00:00:00
 authors: "Paul Hendry"
 ---
 
-<script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.js'></script>
+<script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.min.js'></script>
 
 Part 1: [Quintus, a JavaScript Game Engine: Introduction]({{ site.baseurl }}/quintus-introduction)
 
