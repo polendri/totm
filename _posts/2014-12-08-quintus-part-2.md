@@ -3,9 +3,10 @@ layout: post
 title:  "Quintus, a JavaScript Game Engine: Part 2"
 date:   2014-12-08 00:00:00
 authors: "Paul Hendry"
+scripts:
+ - "http://cdn.html5quintus.com/v0.2.0/quintus-all.min.js"
 ---
 
-<script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.min.js'></script>
 
 Part 1: [Quintus, a JavaScript Game Engine: Introduction]({{ site.baseurl }}/quintus-introduction)
 
