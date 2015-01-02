@@ -455,3 +455,5 @@ hood and see how it works.
 Finally, [here]({{ site.baseurl }}/assets/content/quintus/part2/game2/game2.js)
 is the full source for the game. Keep in mind that it has a few modifications
 so that it can run properly on this site.
+
+Part 3: [Quintus, a JavaScript Game Engine: Part 3]({{ site.baseurl }}/quintus-part-3)

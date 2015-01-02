@@ -1,51 +1,121 @@
 ---
-layout: default
 title: Technology of the Month
 ---
 
-{% for post in paginator.posts %}
+<!DOCTYPE html>
+<html>
+<head>
 
-	<article class="post">
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <meta name="viewport" content="width=device-width">
 
-		{% if post.external-url %}
-			<h1>
-				<a href="{{ post.external-url }}">{{ post.title }}</a>
-                                <a class="anchor" href="{{ site.baseurl }}{{ post.url }}"><i class="icon-anchor"></i></a>
-			</h1>
-		{% else %}
-                        <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-		{% endif %}
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  {% for post in paginator.posts %}
+  {% for script in post.scripts %}
+  <script src="{{ script }}"></script>
+  {% endfor %}
+  {% endfor %}
 
-                <p class="meta">Written by: {{ post.authors }}</p>
+  <link href="{{ site.baseurl }}/assets/css/style.css" rel="stylesheet" />
+  <link href="{{ site.baseurl }}/assets/css/colors-dark.css" rel="stylesheet" />
 
-		<div class="post-content">{{ post.content }}</div>
+</head>
 
-	</article>
-
-{% endfor %}
-
+<body>
 
 
-{% if paginator.total_pages > 1 %}
-	<div class="postnavigation">
 
-		{% if paginator.previous_page %}
-			{% if paginator.page == 2 %}
-				<a class="prev left" href="/">&larr; Newer</a>
-			{% else %}
-                                <a class="prev left" href="{{ site.baseurl}}/page{{paginator.previous_page}}/">&larr; Newer</a>
-			{% endif %}
-		{% else %}
-			<span class="nope left">&larr; Newer</span>
-		{% endif %}
+  <header id="header">
+    <h1><a href="/">{{ site.name }}</a></h1>
+    <p>{{ site.description }}</p>
+  </header>
 
-		<span class="pages">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
 
-		{% if paginator.next_page %}
-                        <a class="next right" href="{{ site.baseurl }}/page{{paginator.next_page}}/">Older &rarr;</a>
-		{% else %}
-			<span class="nope right">Older &rarr;</span>
-		{% endif %}
 
-	</div>
-{% endif %}
+  <div id="page">
+    <div id="sidebar">
+      <nav>
+        <ul>
+          <li><a href="{{ site.baseurl }}/">Home</a></li>
+          <li><a href="{{ site.baseurl }}/archives">Archive</a></li>
+          <li><a href="{{ site.baseurl }}/about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="content">
+      {% for post in paginator.posts %}
+
+              <article class="post">
+
+                      {% if post.external-url %}
+                              <h1>
+                                      <a href="{{ post.external-url }}">{{ post.title }}</a>
+                                      <a class="anchor" href="{{ site.baseurl }}{{ post.url }}"><i class="icon-anchor"></i></a>
+                              </h1>
+                      {% else %}
+                              <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+                      {% endif %}
+
+                      <p class="meta">Written by: {{ post.authors }}</p>
+
+                      <div class="post-content">{{ post.content }}</div>
+
+              </article>
+
+      {% endfor %}
+
+
+
+      {% if paginator.total_pages > 1 %}
+              <div class="postnavigation">
+
+                      {% if paginator.previous_page %}
+                              {% if paginator.page == 2 %}
+                                      <a class="prev left" href="/">&larr; Newer</a>
+                              {% else %}
+                                      <a class="prev left" href="{{ site.baseurl}}/page{{paginator.previous_page}}/">&larr; Newer</a>
+                              {% endif %}
+                      {% else %}
+                              <span class="nope left">&larr; Newer</span>
+                      {% endif %}
+
+                      <span class="pages">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+                      {% if paginator.next_page %}
+                              <a class="next right" href="{{ site.baseurl }}/page{{paginator.next_page}}/">Older &rarr;</a>
+                      {% else %}
+                              <span class="nope right">Older &rarr;</span>
+                      {% endif %}
+
+              </div>
+      {% endif %}
+    </div>
+
+
+
+  </div>
+
+
+
+  <footer id="footer">
+    <p class="copyright">Copyright &copy; {{ site.time | date: '%Y' }} {{ site.name }}. Powered by <a href="http://jekyllrb.com">Jekyll</a>, theme by <a href="http://www.webmaster-source.com">Matt Harzewski</a></p>
+  </footer>
+
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="{{ site.baseurl }}/assets/js/jquery.mobilemenu.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('#sidebar nav ul').mobileMenu({'topOptionText': 'Menu', 'prependTo': '#sidebar nav'});
+    });
+  </script>
+
+
+
+</body>
+</html>

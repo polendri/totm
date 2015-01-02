@@ -204,3 +204,7 @@ are a bunch of pages worth visiting:
  - [The main documentation page](http://www.html5quintus.com/documentation),
    which has a big list of examples and another big list of links to various
    tutorials.
+
+Part 2: [Quintus, a JavaScript Game Engine: Part 2]({{ site.baseurl }}/quintus-part-2)
+
+Part 3: [Quintus, a JavaScript Game Engine: Part 3]({{ site.baseurl }}/quintus-part-3)
